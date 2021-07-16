@@ -5,8 +5,9 @@ import { BaseThunkType, InferActionTypes } from './../reduxStore';
 //Action Creators
 export const actions = {
     IsFetchingAC: (isFetching: boolean) => ({ type: 'auth/IS_FETCHING', payload: isFetching } as const),
-    logoutAC: () => ({ type: 'auth/LOGOUT' } as const),
+    LoginAC: (user: {email:string, password:string}) => ({ type: 'auth/LOGIN', payload: user } as const),
     RegisterAC: (user: UserType) => ({ type: 'auth/REGISTER', payload: user } as const),
+    logoutAC: () => ({ type: 'auth/LOGOUT' } as const),
 }
 type ActionTypes = InferActionTypes<typeof actions>
 
@@ -14,10 +15,11 @@ type ActionTypes = InferActionTypes<typeof actions>
 //InitialState
 let initialState = {
     users: [] as UserType[],
-    me: "",
+    me: [] as string[],
     isFetching: false,
     RegMsg: "",
     RegError: "",
+    LogError: ""
 }
 export type AuthInitialStorageStateType = typeof initialState
 
@@ -49,10 +51,29 @@ const authReducer = (state = initialState, action: ActionTypes): AuthInitialStor
                     RegError: ""
                 }
             }
+        case "auth/LOGIN":
+            const loguser = action.payload;
+            const existentUser = state.users.find(x => x.email === loguser.email)
+            if (existentUser) {
+                return {
+                    ...state,
+                    // users: state.users.map(stateItem =>
+                    //     stateItem.email === existUser.email ? user : stateItem),
+                    // RegError: "A user with that email already exists"
+                    me: state.users.map(stateItem =>
+                        stateItem.password ===  existentUser.password ? loguser.email : '')
+                }
+            } else {
+                return {
+                    ...state,
+                    LogError: "Unexistent user"
+                }
+            }
+
         case "auth/LOGOUT":
             return {
                 ...state,
-                me: '',
+                me: [],
             }
         default:
             return state
@@ -64,17 +85,10 @@ type DispatchType = Dispatch<ActionTypes>
 type ThunkType = BaseThunkType<ActionTypes>
 
 
-export const login = (username: string, password: string): ThunkType => {
+export const login = (email: string, password: string): ThunkType => {
     return async (dispatch: DispatchType) => {
         dispatch(actions.IsFetchingAC(true))
-        // await authAPI.Login(username, password)
-        //     .then(async res => {
-        //         let token = Object.values(res.data).toLocaleString()
-        //         dispatch(actions.getAuthTokenAC(token))
-        //         let meData = await authAPI.Me(token)
-        //         dispatch(actions.getAuthMeAC(meData))
-        //     })
-        //     .catch(err => dispatch(actions.FetchLogErrorAC(err.response.data)))
+        dispatch(actions.LoginAC({email,password}))
         dispatch(actions.IsFetchingAC(false))
     }
 }

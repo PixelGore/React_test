@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import { login } from '../../../Redux/Reducers/authReducer';
-// import { getLogError, getAuthMe } from '../../../Redux/Selectors/authSelector';
+import { getLogError, getAuthMe } from '../../../Redux/Selectors/authSelector';
 
 
 
@@ -19,13 +19,13 @@ export const Login = () => {
 
     // Local variables
     const initialValues: LoginFormType = { email: '', password: '' };
-    // const LogError = useSelector(getLogError)
-    // const Me = useSelector(getAuthMe)
+    const LogError = useSelector(getLogError)
+    const Me = useSelector(getAuthMe)
 
     // If logged redirect to home
-    // if (Me.length > 0) {
-    //     return <Redirect to={"/home"} />
-    // }
+    if (Me.length > 0) {
+        return <Redirect to={"/home"} />
+    }
 
     return (
         <div className="form-container">
@@ -60,23 +60,7 @@ export const Login = () => {
 
                         <button type="submit" className="btn solid" >Login</button>
 
-                        {/* {LogError ? <div className="error">{LogError}</div> : null} */}
-
-                        <p className="social-text">Or sign up with social platforms</p>
-                        <div className="social-media">
-                            <a href="/" className="social-icon">
-                                <i className="fa fa-facebook"></i>
-                            </a>
-                            <a href="/" className="social-icon">
-                                <i className="fa fa-twitter"></i>
-                            </a>
-                            <a href="/" className="social-icon">
-                                <i className="fa fa-google"></i>
-                            </a>
-                            <a href="/" className="social-icon">
-                                <i className="fa fa-linkedin"></i>
-                            </a>
-                        </div>
+                        {LogError ? <div className="error">{LogError}</div> : null}
 
                     </Form>
                 )}

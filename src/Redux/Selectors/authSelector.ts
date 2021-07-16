@@ -15,3 +15,7 @@ export const getAuthMe = (state: AppStateType) => {
 export const getisFetching = (state: AppStateType) => {
     return state.auth.isFetching
 }
+
+export const getLogError = (state:AppStateType) => {
+    return state.auth.LogError
+}

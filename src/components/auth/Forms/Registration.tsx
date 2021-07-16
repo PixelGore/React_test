@@ -8,8 +8,7 @@ import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../../Redux/Reducers/authReducer';
 import { useEffect } from 'react';
-import PreLoader from "../../common/Preloader/Preloader";
-import { getisFetching, getRegError, getRegMsg } from '../../../Redux/Selectors/authSelector';
+import { getRegError, getRegMsg } from '../../../Redux/Selectors/authSelector';
 
 
 
@@ -22,7 +21,6 @@ export const Registration = ({ setIsActive }: propsType) => {
     const initialValues: RegisterFormType = { email: '', password: '', password2: '', first_name: '', last_name: '' };
     const RegError = useSelector(getRegError)
     const RegMsg = useSelector(getRegMsg)
-    const isFetching = useSelector(getisFetching)
 
     // Switch to login if registration is successful
     useEffect(() => {
@@ -34,7 +32,6 @@ export const Registration = ({ setIsActive }: propsType) => {
 
     return (
         <div className="form-container">
-            {isFetching? <PreLoader/> : ''}
             <Formik
                 initialValues={initialValues}
                 onSubmit={(values, actions) => {
@@ -113,21 +110,6 @@ export const Registration = ({ setIsActive }: propsType) => {
 
                         {RegError ? <div className="error">{RegError}</div> : null}
 
-                        <p className="social-text">Or sign up with social platforms</p>
-                        <div className="social-media">
-                            <a href="/" className="social-icon">
-                                <i className="fa fa-facebook"></i>
-                            </a>
-                            <a href="/" className="social-icon">
-                                <i className="fa fa-twitter"></i>
-                            </a>
-                            <a href="/" className="social-icon">
-                                <i className="fa fa-google"></i>
-                            </a>
-                            <a href="/" className="social-icon">
-                                <i className="fa fa-linkedin"></i>
-                            </a>
-                        </div>
                     </Form>
                 )}
             </Formik>
