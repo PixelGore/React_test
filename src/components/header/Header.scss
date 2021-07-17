@@ -1,0 +1,265 @@
+.header_wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    width: 100%;
+    grid-area: hd;
+
+
+    .header {
+        position: relative;
+        width: 100%;
+        top: 0;
+        left: 0;
+
+        .container {
+            max-width: 100%;
+            padding: 0 10px;
+            width: 1200px;
+            margin: 0 auto;
+        }
+    }
+
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000000;
+    }
+
+    .header__body {
+        display: flex;
+        justify-content: space-between;
+        height: 80px;
+        align-items: center;
+    }
+
+    .header__logo {
+        flex: 0 0 140px;
+        position: relative;
+        z-index: 99;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+
+    // Burger & Menu
+
+
+
+    // LogIn & Cart
+    .header__end {
+        display: flex;
+        margin-top: 5px;
+        z-index: 3;
+
+        .material-icons {
+            font-size: 30px;
+        }
+
+        .header__login {
+            padding-right: 30px;
+
+            .header__login-link {
+                text-decoration: none;
+            }
+
+            .login-text {
+                color: #fff;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 35px;
+                font-weight: 900px;
+            }
+
+        }
+
+        .header__cart {
+            margin-right: 10px;
+            position: relative;
+            cursor: pointer;
+
+            .cart-text {
+                color: #fff;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 35px;
+                font-weight: 900px;
+                position: relative;
+
+                &::before {
+                    content: attr(data-before);
+                    font-size: 15px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    top: -5px;
+                    left: 15px;
+                    background: red;
+                }
+            }
+        }
+    }
+
+}
+
+.header__burger {
+    display: none;
+}
+
+.header__list {
+    display: flex;
+    align-self: flex-end;
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    list-style: none;
+
+    .header__link {
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        padding: 15px 25px;
+        position: relative;
+    }
+
+    .header__link::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        background: #fff;
+        width: 100%;
+        height: calc(100% + 25px);
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: all .2s;
+        overflow: hidden;
+    }
+
+    .header__link:hover::before {
+        opacity: 1;
+    }
+
+    .header__link-text {
+        color: #fff;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18px;
+        font-weight: 900px;
+    }
+
+    .header__link-text {
+        position: relative;
+        transition: color .2s;
+    }
+
+    .header__link:hover .header__link-text {
+        color: #1f1f1f;
+    }
+
+    .isActive.header__link {
+        .header__link-text {
+            text-decoration: underline;
+        }
+    }
+}
+
+//End LogIn & Cart
+
+@media(max-width:992px) {
+
+    .header__list .header__link {
+        padding: 15px 15px;
+    }
+
+    .header__link-text {
+        font-size: 16px;
+    }
+
+    .header__login {
+        padding-right: 20px;
+    }
+}
+
+@media (max-width:767px) {
+
+    .header__body {
+        height: 50px;
+    }
+
+    // Display items
+    .header__login {
+        display: none;
+    }
+
+    .header__menu {
+        display: none;
+    }
+
+    // Hamburger Start
+    .header__burger {
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 30px;
+        height: 20px;
+        z-index: 3;
+        order: -1;
+
+        span {
+            background-color: #fff;
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            left: 0;
+            transition: transform 0.7s ease-in-out;
+        }
+
+        &::before,
+        &::after {
+            content: '';
+            background-color: #fff;
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            left: 0;
+            transition: transform .5s ease-in;
+        }
+
+        &::before {
+            transform: translateY(12px);
+        }
+
+        &::after {
+            transform: translateY(-12px);
+
+        }
+    }
+
+    .header__burger.active {
+        .burger_middle {
+            transform: scale(0);
+        }
+
+
+        &::before {
+            transform: rotate(45deg);
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+        }
+    }
+
+    // Hamburger End
+}
