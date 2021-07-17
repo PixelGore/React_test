@@ -3,12 +3,18 @@ import "./Header.scss";
 import logo from "../../assets/common/logo.svg";
 import { useState } from "react";
 import { Menu } from "./menu/Menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAuthMe } from "../../Redux/Selectors/authSelector";
+import { logout } from "../../Redux/Reducers/authReducer";
 
 export const Header: React.FC = () => {
+  const dispatch = useDispatch()
   const [isOpenBrg, setisOpenBrg] = useState(false);
   const Me = useSelector(getAuthMe)
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
 
   return (
     <div className="header_wrapper">
@@ -23,7 +29,7 @@ export const Header: React.FC = () => {
               className={
                 isOpenBrg ? "header__burger active" : "header__burger"
               }
-              onClick={() => { setisOpenBrg(!isOpenBrg)}}
+              onClick={() => { setisOpenBrg(!isOpenBrg) }}
             >
               <span className="burger_middle"></span>
             </div>
@@ -77,6 +83,11 @@ export const Header: React.FC = () => {
                     <span className="material-icons">{Me.length > 0 ? "account_circle" : "login"}</span>
                   </span>
                 </NavLink>
+              </div>
+              <div className="header__cart">
+                <span style={{ color: "white", cursor: "pointer" }} onClick={handleLogout} className="material-icons">
+                {Me.length < 0 ? "logout" : ''}
+                </span>
               </div>
             </div>
           </div>

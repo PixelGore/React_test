@@ -5,6 +5,7 @@ div.auth-container {
     width: 100%;
     background-color: #fff;
     overflow: hidden;
+    margin-top: 80px;
 
     &::before {
         content: "";
@@ -322,7 +323,7 @@ div.auth-container {
                             align-items: center;
                             justify-content: center;
                             margin: 0 10%;
-                            transform: translateX(60px) translateY(30px);
+                            transform: translateY(30px);
                         }
 
                         img.image {
@@ -464,7 +465,7 @@ div.auth-container {
 
                 &.right-panel {
                     div.content {
-                        padding: 0 0 0 100px;
+                        padding: 0 0 0 40px;
                     }
                 }
             }
